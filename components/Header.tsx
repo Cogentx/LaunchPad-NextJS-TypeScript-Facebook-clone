@@ -14,6 +14,10 @@ function Header() {
           layout="fixed"
           alt="facebook logo"
         />
+        <div className='flex ml-2 items-center rounded-full p-2 bg-gray-100'>
+          <SearchIcon className='h-6 text-gray-600'/>
+          <input type="text" placeholder="Search Facebook" className='flex items-center bg-transparent outline-none ml-2 placeholder-gray-500' />
+        </div>
       </div>
       {/* center */}
       <div>Center</div>
