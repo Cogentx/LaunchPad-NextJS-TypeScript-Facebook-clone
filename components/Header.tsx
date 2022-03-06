@@ -35,9 +35,13 @@ function Header() {
         </div>
       </div>
       {/* right */}
-      <div className='flex items-center sm:space-x-2 justify-end'>
+      <div className="flex items-center sm:space-x-2 justify-end">
         {/* Profile Pic */}
-        <p className='whitespace-nowrap font-semibold pr-3'>Ted Cogent</p>
+        <p className="whitespace-nowrap font-semibold pr-3">Ted Cogent</p>
+        <ViewGridIcon className="icon"></ViewGridIcon>
+        <ChatIcon className="icon"></ChatIcon>
+        <BellIcon className="icon"></BellIcon>
+        <ChevronDownIcon className="icon"></ChevronDownIcon>
       </div>
     </div>
   );
