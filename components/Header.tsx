@@ -5,7 +5,7 @@ import HeaderIcon from './HeaderIcon';
 
 function Header() {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between p-2 lg:px-5 sticky t-0 z-50 bg-white shadow-md">
       {/* left */}
       <div className="flex items-center">
         <Image
@@ -27,7 +27,7 @@ function Header() {
       {/* center */}
       <div className="flex justify-center flex-grow">
         <div className="flex space-x-6 md:space-x-2">
-          <HeaderIcon Icon={HomeIcon} />
+          <HeaderIcon active Icon={HomeIcon} />
           <HeaderIcon Icon={FlagIcon} />
           <HeaderIcon Icon={PlayIcon} />
           <HeaderIcon Icon={ShoppingCartIcon} />
