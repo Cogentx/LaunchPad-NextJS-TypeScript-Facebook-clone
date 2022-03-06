@@ -20,7 +20,7 @@ function Header() {
           <input
             type="text"
             placeholder="Search Facebook"
-            className="flex items-center bg-transparent outline-none ml-2 placeholder-gray-500"
+            className="hidden md:inline-flex items-center bg-transparent outline-none ml-2 placeholder-gray-500"
           />
         </div>
       </div>
@@ -35,7 +35,10 @@ function Header() {
         </div>
       </div>
       {/* right */}
-      <div>Right</div>
+      <div className='flex items-center sm:space-x-2 justify-end'>
+        {/* Profile Pic */}
+        <p className='whitespace-nowrap font-semibold pr-3'>Ted Cogent</p>
+      </div>
     </div>
   );
 }
