@@ -3,13 +3,14 @@ import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Login from '../components/Login';
+import Sidebar from '../components/Sidebar';
 
 export default function Home() {
   const { data: session, status } = useSession();
   if (!session) return <Login />;
 
   return (
-    <div>
+    <div className="bg-gray-100 overflow-hidden h-screen">
       <Head>
         <title>Facebook Clone</title>
         <meta name="description" content="Facebook clone built with Next.js, React and TypeScript" />
@@ -18,8 +19,8 @@ export default function Home() {
 
       <Header />
 
-      <main>
-        {/* Sidebar */}
+      <main className='flex'>
+        <Sidebar />
         {/* Feed */}
         {/* Widgets */}
       </main>

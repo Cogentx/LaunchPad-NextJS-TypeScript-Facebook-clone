@@ -3,6 +3,7 @@ import { BellIcon, ChatIcon, ChevronDownIcon, HomeIcon, UserGroupIcon, ViewGridI
 import { FlagIcon, PlayIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import HeaderIcon from './HeaderIcon';
 import { useSession, signOut } from 'next-auth/react';
+import { userInfo } from 'os';
 
 function Header() {
   const { data: session } = useSession();
@@ -55,7 +56,9 @@ function Header() {
             alt="user profile picture"
           />
         )}
-        <p className="whitespace-nowrap font-semibold pr-3">Ted Cogent</p>
+        <p className="whitespace-nowrap font-semibold pr-3">
+          {session && session.user?.name!}
+        </p>
         <ViewGridIcon className="icon"></ViewGridIcon>
         <ChatIcon className="icon"></ChatIcon>
         <BellIcon className="icon"></BellIcon>
