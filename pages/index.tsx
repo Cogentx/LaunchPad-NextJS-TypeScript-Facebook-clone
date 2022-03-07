@@ -10,7 +10,7 @@ export default function Home() {
   if (!session) return <Login />;
 
   return (
-    <div>
+    <div className="bg-gray-100 overflow-hidden h-screen">
       <Head>
         <title>Facebook Clone</title>
         <meta name="description" content="Facebook clone built with Next.js, React and TypeScript" />
@@ -19,7 +19,7 @@ export default function Home() {
 
       <Header />
 
-      <main>
+      <main className='flex'>
         <Sidebar />
         {/* Feed */}
         {/* Widgets */}

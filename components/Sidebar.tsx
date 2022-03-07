@@ -8,7 +8,7 @@ export default function Sidebar() {
   const { data: session } = useSession();
 
   return (
-    <div className="border border-red-500 p-2 mt-5 max-w-[600px] xl:min-w-[300px]">
+    <div className="p-2 mt-5 max-w-[600px] xl:min-w-[300px]">
       {/* since we're using TailwindCSS JIT Compiler we can use '[]' to set custom values */}
       <SidebarRow src={session?.user?.image!} title={session?.user?.name!} />
       <SidebarRow Icon={UsersIcon} title="Friends" />
