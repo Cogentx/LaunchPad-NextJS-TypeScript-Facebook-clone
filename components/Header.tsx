@@ -2,8 +2,10 @@ import Image from 'next/image';
 import { BellIcon, ChatIcon, ChevronDownIcon, HomeIcon, UserGroupIcon, ViewGridIcon } from '@heroicons/react/solid';
 import { FlagIcon, PlayIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outline';
 import HeaderIcon from './HeaderIcon';
+import { useSession, signOut } from 'next-auth/react';
 
 function Header() {
+  const { data: session } = useSession();
   return (
     <div className="flex justify-between p-2 lg:px-5 sticky t-0 z-50 bg-white shadow-md">
       {/* left */}
@@ -37,6 +39,21 @@ function Header() {
       {/* right */}
       <div className="flex items-center sm:space-x-2 justify-end">
         {/* Profile Pic */}
+        {/* protect against image not being available */}
+        {session && session.user && (
+          <Image
+            className="rounded-full cursor-pointer"
+            height={40}
+            width={40}
+            layout="fixed"
+            /* Next.js Image requires 'src' so use '!' to tell TypeScript
+          it will be there. Works with 'session && session.user' checks
+          above to ensure they exist at runtime otherwise Image is not
+          displayed (avoids code breaking at runtime)*/
+            src={session.user.image!}
+            alt="user profile picture"
+          />
+        )}
         <p className="whitespace-nowrap font-semibold pr-3">Ted Cogent</p>
         <ViewGridIcon className="icon"></ViewGridIcon>
         <ChatIcon className="icon"></ChatIcon>
