@@ -1,3 +1,5 @@
+import StoryCard from "./StoryCard";
+
 interface IStory {
   name: string;
   src: string;
@@ -33,10 +35,9 @@ const stories: Array<IStory> = [
 
 export default function Stories() {
   return (
-    <div>
-      {stories.map((story: IStory, idx) => (
-        <div key={idx}>{story.name}</div>
-      ))}
+    <div className="flex justify-center space-x-2">
+      {stories.map(({name,src,profile}: IStory, idx) => (
+        <StoryCard key={idx} name={name} src={src} profile={profile}/>))}
     </div>
   );
 }
