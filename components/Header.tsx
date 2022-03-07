@@ -42,6 +42,7 @@ function Header() {
         {/* protect against image not being available */}
         {session && session.user && (
           <Image
+            onClick={() => signOut()}
             className="rounded-full cursor-pointer"
             height={40}
             width={40}
