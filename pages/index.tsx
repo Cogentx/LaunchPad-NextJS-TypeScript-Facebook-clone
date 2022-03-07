@@ -3,6 +3,7 @@ import { getSession, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Login from '../components/Login';
+import Sidebar from '../components/Sidebar';
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -19,7 +20,7 @@ export default function Home() {
       <Header />
 
       <main>
-        {/* Sidebar */}
+        <Sidebar />
         {/* Feed */}
         {/* Widgets */}
       </main>
