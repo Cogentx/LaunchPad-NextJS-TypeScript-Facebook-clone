@@ -10,6 +10,8 @@ function Login() {
           height={400}
           objectFit="contain"
           alt="facebook logo"
+          // use 'priority' to disable 'lazy-loading' on images 'above-the-fold'
+          priority
         />
         <button onClick={()=>signIn()} className="p-5 mt-5 bg-blue-500 rounded-full text-white text-center cursor-pointer">
           Login with Facebook
