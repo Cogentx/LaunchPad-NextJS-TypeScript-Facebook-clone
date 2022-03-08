@@ -1,18 +1,36 @@
+import { useRef } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function InputBox() {
   const { data: session } = useSession();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const sendPost = async (e: any) => {
     // prevent page refresh on submit
     e.preventDefault();
 
+    // only submit if message exists
+    if (!inputRef.current?.value) return;
 
+    /* Firebase v9 Cloud Firestore document creation
+      - If no collection exists, it is created
+      - If no document exists, it is created
+      - If document exists, it is replaced (unless merge option specified)
+    */
+    await addDoc(collection(db,'fb-posts'), {
+      message: inputRef.current.value,
+      name: session?.user?.name,
+      email: session?.user?.email,
+      image: session?.user?.image,
+      timestamp: serverTimestamp(),
+    });
+
+    inputRef.current.value = '';
   };
 
   return (
@@ -31,6 +49,7 @@ export default function InputBox() {
         <form className="flex flex-1" onSubmit={sendPost}>
           <input
             type="text"
+            ref={inputRef}
             placeholder={`What's on your mind, ${session?.user?.name!}?`}
             className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"
           />
