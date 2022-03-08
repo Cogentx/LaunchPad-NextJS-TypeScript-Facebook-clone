@@ -2,12 +2,11 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
-import { FormEventHandler } from 'react';
 
 export default function InputBox() {
   const { data: session } = useSession();
 
-  const sendPost = (e:any) => {
+  const sendPost = (e: any) => {
     e.preventDefault();
   };
 
@@ -36,13 +35,21 @@ export default function InputBox() {
         </form>
       </div>
 
-      <div>
-        <div>
-          <VideoCameraIcon className="rounded-full text-red-500 h-7"/>
-          <p className="text-xs">Live Video</p>
+      <div className="flex justify-evenly p-2 border-t">
+        <div className='inputIcon'>
+          <VideoCameraIcon className="rounded-full text-red-500 h-7" />
+          <p className="text-xs sm:text-sm xl:text-base">Live Video</p>
         </div>
-        <div></div>
-        <div></div>
+
+        <div className='inputIcon'>
+          <CameraIcon className="rounded-full text-green-400 h-7" />
+          <p className="text-xs sm:text-sm xl:text-base">Photos/Video</p>
+        </div>
+
+        <div className='inputIcon'>
+          <EmojiHappyIcon className="rounded-full text-yellow-300 h-7" />
+          <p className="text-xs sm:text-sm xl:text-base">Feeling/Activity</p>
+        </div>
       </div>
     </div>
   );
