@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import { EmojiHappyIcon } from '@heroicons/react/outline';
+import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
+import { FormEventHandler } from 'react';
 
 export default function InputBox() {
   const { data: session } = useSession();
 
-  const sendPost = (e) => {
+  const sendPost = (e:any) => {
     e.preventDefault();
   };
 
@@ -21,7 +24,7 @@ export default function InputBox() {
             alt="user profile picture"
           />
         )}
-        <form className="flex flex-1">
+        <form className="flex flex-1" onSubmit={sendPost}>
           <input
             type="text"
             placeholder={`What's on your mind, ${session?.user?.name!}?`}
@@ -31,6 +34,15 @@ export default function InputBox() {
             Submit
           </button>
         </form>
+      </div>
+
+      <div>
+        <div>
+          <VideoCameraIcon className="rounded-full text-red-500 h-7"/>
+          <p className="text-xs">Live Video</p>
+        </div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   );
