@@ -2,12 +2,17 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export default function InputBox() {
   const { data: session } = useSession();
 
-  const sendPost = (e: any) => {
+  const sendPost = async (e: any) => {
+    // prevent page refresh on submit
     e.preventDefault();
+
+
   };
 
   return (
@@ -36,17 +41,17 @@ export default function InputBox() {
       </div>
 
       <div className="flex justify-evenly p-2 border-t">
-        <div className='inputIcon'>
+        <div className="inputIcon">
           <VideoCameraIcon className="rounded-full text-red-500 h-7" />
           <p className="text-xs sm:text-sm xl:text-base">Live Video</p>
         </div>
 
-        <div className='inputIcon'>
+        <div className="inputIcon">
           <CameraIcon className="rounded-full text-green-400 h-7" />
           <p className="text-xs sm:text-sm xl:text-base">Photos/Video</p>
         </div>
 
-        <div className='inputIcon'>
+        <div className="inputIcon">
           <EmojiHappyIcon className="rounded-full text-yellow-300 h-7" />
           <p className="text-xs sm:text-sm xl:text-base">Feeling/Activity</p>
         </div>
