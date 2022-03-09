@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { collection, addDoc, serverTimestamp, getDoc, updateDoc } from 'firebase/firestore';
-import { db, storage } from '../firebase';
+import { db, fb_posts_url, storage } from '../firebase';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 export default function InputBox() {
@@ -41,7 +41,7 @@ export default function InputBox() {
       - If document exists, it is replaced (unless merge option specified)
     */
     try {
-      const docRef = await addDoc(collection(db, 'fb-posts'), {
+      const docRef = await addDoc(collection(db, fb_posts_url), {
         message: inputRef.current.value,
         name: session?.user?.name,
         email: session?.user?.email,
@@ -54,7 +54,7 @@ export default function InputBox() {
       // if post successfully added to Cloud Firestore and there is an image to upload
       if (doc.exists() && imageToPost) {
 
-        const storageRef = ref(storage, `fb-posts/${doc.id}`);
+        const storageRef = ref(storage, `${fb_posts_url}/${doc.id}`);
 
         // imageToPost is a 'string' type of 'data_url' (base64 encoded image)
         // this type matches (data_url) how file is read in above 'reader.readAsDataURL(e.target.files[0])'

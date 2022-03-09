@@ -19,4 +19,7 @@ const app = getApps().length < 1 ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { db, storage };
+// Firebase related constants
+const fb_posts_url = 'fb-posts';
+
+export { db, storage, fb_posts_url };
