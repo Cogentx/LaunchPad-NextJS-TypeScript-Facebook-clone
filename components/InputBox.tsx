@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
 import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
-import { collection, addDoc, serverTimestamp, getDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
@@ -50,24 +50,40 @@ export default function InputBox() {
       });
 
       const doc = await getDoc(docRef);
+      // TODO: REMOVE LOG
+      console.log({doc});
 
       // if post successfully added to Cloud Firestore and there is an image to upload
       if (doc.exists() && imageToPost) {
+        // TODO: REMOVE LOG
+        console.log({ imageToPost });
         const storageRef = ref(storage, `fb-posts/${doc.id}`);
+        // TODO: REMOVE LOG
+        console.log({ storageRef });
+
         // imageToPost is a 'string' type of 'data_url' (base64 encoded image)
         // this type matches (data_url) how file is read in above 'reader.readAsDataURL(e.target.files[0])'
         const uploadResult = await uploadString(storageRef, imageToPost as string, 'data_url');
+        // TODO: REMOVE LOG
+        console.log({ uploadResult });
 
         removeImage();
 
         const downloadURL = await getDownloadURL(uploadResult.ref);
 
-        
+        // TODO: REMOVE LOG
+        console.log({ downloadURL });
 
-
+        // CAUTION: if NOT using 'UPDATEDOC', set {MERGE: TRUE} when updating otherwise it will simply replace current Document and all current data will be lost.
+        // 'updateDoc' will MERGE by default!!!
+        updateDoc(docRef, {
+          postImage: downloadURL,
+        });
+        // TODO: REMOVE LOG
+        console.log("post updated with image url");
       }
     } catch (error) {
-      console.log('InputBoxComp: error adding post');
+      console.log('InputBoxComp: error adding post',error);
     }
 
     // Get Doc Ref from Firebase Cloud Firestore
