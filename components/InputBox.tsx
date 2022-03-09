@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { EmojiHappyIcon } from '@heroicons/react/outline';
@@ -7,8 +7,25 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function InputBox() {
+  const [imageToPost, setImageToPost] = useState<string | ArrayBuffer | null | undefined>(null);
   const { data: session } = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
+  const filePickerRef = useRef<HTMLInputElement>(null);
+
+  const addImageToPost = (e: any) => {
+    const reader = new FileReader();
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setImageToPost(readerEvent.target?.result);
+    };
+  };
+
+  const removeImage = () => {
+    setImageToPost(null);
+  };
 
   const sendPost = async (e: any) => {
     // prevent page refresh on submit
@@ -22,7 +39,7 @@ export default function InputBox() {
       - If no document exists, it is created
       - If document exists, it is replaced (unless merge option specified)
     */
-    await addDoc(collection(db,'fb-posts'), {
+    await addDoc(collection(db, 'fb-posts'), {
       message: inputRef.current.value,
       name: session?.user?.name,
       email: session?.user?.email,
@@ -57,6 +74,7 @@ export default function InputBox() {
             Submit
           </button>
         </form>
+
       </div>
 
       <div className="flex justify-evenly p-2 border-t">
@@ -65,9 +83,11 @@ export default function InputBox() {
           <p className="text-xs sm:text-sm xl:text-base">Live Video</p>
         </div>
 
-        <div className="inputIcon">
+        {/* use 'filePickerRef' to call 'click' on hidden button */}
+        <div onClick={() => filePickerRef.current?.click()} className="inputIcon">
           <CameraIcon className="rounded-full text-green-400 h-7" />
           <p className="text-xs sm:text-sm xl:text-base">Photos/Video</p>
+          <input ref={filePickerRef} onChange={addImageToPost} type="file" hidden />
         </div>
 
         <div className="inputIcon">
