@@ -75,6 +75,13 @@ export default function InputBox() {
           </button>
         </form>
 
+        {imageToPost && (
+          <div onClick={removeImage} className="flex flex-col filter hover:brightness-110 transition duration-150 hover:scale-105 cursor-pointer">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={imageToPost as string} alt="Image to Post" className='h-10 object-contain'/>
+            <p className="text-xs text-red-500 text-center">Remove</p>
+          </div>
+        )}
       </div>
 
       <div className="flex justify-evenly p-2 border-t">
