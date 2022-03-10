@@ -14,8 +14,6 @@ export default function Home({ posts }: any) {
   const { data: session, status } = useSession();
   if (!session) return <Login />;
 
-  console.log(posts);
-
   return (
     <div className="bg-gray-100 overflow-hidden h-screen">
       <Head>
@@ -28,7 +26,7 @@ export default function Home({ posts }: any) {
 
       <main className="flex">
         <Sidebar />
-        <Feed />
+        <Feed posts={posts}/>
         <Widgets />
       </main>
     </div>
