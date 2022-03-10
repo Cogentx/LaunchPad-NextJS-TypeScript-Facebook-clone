@@ -4,9 +4,10 @@ import { IPost } from '../fb-clone';
 
 interface IProps {
   post: IPost;
+  id?: string;
 }
 
-export default function Post({ post }: IProps) {
+export default function Post({ post, id }: IProps) {
   const { name, message, timestamp, image, postImage } = post;
 
   return (
@@ -15,7 +16,9 @@ export default function Post({ post }: IProps) {
         <Image src={image!} className="rounded-full" layout="fixed" alt="profile picture" height={40} width={40} />
         <div className="flex flex-col">
           <p className="font-medium">{name}</p>
-          <p className="text-xs">{new Date(timestamp?.toDate()).toLocaleString()}</p>
+          {timestamp ? <p className="text-xs">{new Date(timestamp?.toDate()).toLocaleString()}</p> : (
+            <p className="text-xs text-gray-400">loading...</p>
+          )}
         </div>
       </div>
       <div className="pt-4">
