@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export default function Post({ post }: IProps) {
-  const { name, email, message, timestamp, image, postImage } = post;
+  const { name, message, timestamp, image, postImage } = post;
 
   return (
     <div className="flex flex-col bg-white pt-5 px-5 my-5 rounded-t-2xl shadow-md border-t rounded-b-2xl">
