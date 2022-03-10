@@ -2,6 +2,7 @@ import { SearchIcon } from '@heroicons/react/outline';
 import { DotsHorizontalIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { IContact } from '../fb-clone';
 import { contacts } from '../mock-data';
+import Contact from './Contact';
 
 export default function Widgets() {
   return (
