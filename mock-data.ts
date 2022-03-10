@@ -1,6 +1,6 @@
 import { IContact } from './fb-clone';
 
-const contacts = [
+const contacts: Array<IContact> = [
   {
     src: 'https://links.papareact.com/f0p',
     name: 'Jeff Bezos',
@@ -18,7 +18,7 @@ const contacts = [
     name: 'Mark Zuckerberg',
   },
   {
-    src: 'https://links.papareact.com/c0c',
+    src: 'https://links.papareact.com/d0c',
     name: 'Harry Potter',
   },
   {
