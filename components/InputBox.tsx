@@ -6,6 +6,7 @@ import { CameraIcon, VideoCameraIcon } from '@heroicons/react/solid';
 import { collection, addDoc, serverTimestamp, getDoc, updateDoc } from 'firebase/firestore';
 import { db, fb_posts_url, storage } from '../firebase';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { IPost } from '../fb-clone';
 
 export default function InputBox() {
   const [imageToPost, setImageToPost] = useState<string | ArrayBuffer | null | undefined>(null);
@@ -34,6 +35,7 @@ export default function InputBox() {
 
     // only submit if message exists
     if (!inputRef.current?.value) return;
+    if (!session || !session?.user) return;
 
     /* Firebase v9 Cloud Firestore document creation
       - If no collection exists, it is created
@@ -41,19 +43,19 @@ export default function InputBox() {
       - If document exists, it is replaced (unless merge option specified)
     */
     try {
-      const docRef = await addDoc(collection(db, fb_posts_url), {
+      const post: IPost = {
         message: inputRef.current.value,
-        name: session?.user?.name,
-        email: session?.user?.email,
-        image: session?.user?.image,
+        name: session.user.name as string,
+        email: session.user.email as string,
+        image: session.user.image as string,
         timestamp: serverTimestamp(),
-      });
+      };
+      const docRef = await addDoc(collection(db, fb_posts_url), post);
 
       const doc = await getDoc(docRef);
 
       // if post successfully added to Cloud Firestore and there is an image to upload
       if (doc.exists() && imageToPost) {
-
         const storageRef = ref(storage, `${fb_posts_url}/${doc.id}`);
 
         // imageToPost is a 'string' type of 'data_url' (base64 encoded image)
@@ -70,10 +72,9 @@ export default function InputBox() {
         updateDoc(docRef, {
           postImage: downloadURL,
         });
-
       }
     } catch (error) {
-      console.log('InputBoxComp: error adding post',error);
+      console.log('InputBoxComp: error adding post', error);
     }
 
     // Get Doc Ref from Firebase Cloud Firestore
