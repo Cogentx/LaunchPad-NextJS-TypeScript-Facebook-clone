@@ -1,6 +1,12 @@
 import React from 'react';
+import { IPost } from '../fb-clone';
 
-export default function Post(props:any) {
+interface IProps {
+  post: IPost;
+}
 
-  return <div>Post</div>;
+export default function Post({ post }: IProps) {
+  const {name, email, message,timestamp,image,postImage} = post;
+
+  return <div>{message}</div>;
 }
