@@ -10,4 +10,9 @@ interface IPost {
   postImage?: string;
 }
 
-export { IPost };
+interface IContact {
+  src: string;
+  name: string;
+}
+
+export { IPost, IContact };
