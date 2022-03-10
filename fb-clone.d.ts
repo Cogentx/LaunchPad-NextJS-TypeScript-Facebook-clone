@@ -1,12 +1,12 @@
-import { FieldValue } from "firebase/firestore";
+import { FieldValue } from 'firebase/firestore';
 
 interface IPost {
   id?: string;
-  message: string;
+  message?: string;
   name?: string;
   email?: string;
   image?: string;
-  timestamp: FieldValue;
+  timestamp?: FieldValue;
   postImage?: string;
 }
 
