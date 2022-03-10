@@ -1,4 +1,4 @@
-import { FieldValue } from 'firebase/firestore';
+import { FieldValue, Timestamp } from 'firebase/firestore';
 
 interface IPost {
   id?: string;
@@ -6,7 +6,7 @@ interface IPost {
   name?: string;
   email?: string;
   image?: string;
-  timestamp?: FieldValue;
+  timestamp?: FieldValue<Timestamp>;
   postImage?: string;
 }
 
