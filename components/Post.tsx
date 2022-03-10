@@ -15,7 +15,7 @@ export default function Post({ post }: IProps) {
         <Image src={image!} className="rounded-full" layout="fixed" alt="profile picture" height={40} width={40} />
         <div className="flex flex-col">
           <p className="text-sm">{name}</p>
-          <p className="text-xs">{timestamp?.toString()}</p>
+          <p className="text-xs">{new Date(timestamp?.toDate()).toLocaleString()}</p>
         </div>
       </div>
       <div className="p-5">
