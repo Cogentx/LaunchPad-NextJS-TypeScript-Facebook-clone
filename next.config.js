@@ -2,13 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [
-      'cdn0.iconfinder.com',
-      'platform-lookaside.fbsbx.com',
-      'firebasestorage.googleapis.com',
-      'links.papareact.com',
-    ],
+    domains: ['platform-lookaside.fbsbx.com', 'firebasestorage.googleapis.com', 'links.papareact.com'],
   },
+  presets: ['next/babel'],
 };
 
 module.exports = nextConfig;
