@@ -9,27 +9,33 @@ import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { IPost } from '../fb-clone';
 
 export default function InputBox() {
-  const [imageToPost, setImageToPost] = useState<string | ArrayBuffer | null | undefined>(null);
+  const [imageToPost, setImageToPost] = useState('');
   const { data: session } = useSession();
   const inputRef = useRef<HTMLInputElement>(null);
   const filePickerRef = useRef<HTMLInputElement>(null);
 
   const addImageToPost = (e: any) => {
-    const reader = new FileReader();
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
+    const fileReader = new FileReader();
+    const file = e.target.files[0];
+
+    if (file) {
+      fileReader.readAsDataURL(file);
     }
 
-    reader.onload = (readerEvent) => {
-      setImageToPost(readerEvent.target?.result);
+    fileReader.onload = (readerEvent) => {
+      if (readerEvent.target) {
+        const fileLocal = readerEvent.target.result as string;
+
+        setImageToPost(fileLocal);
+      }
     };
   };
 
-  const removeImage = () => {
-    setImageToPost(null);
+  const resetImageToPost = () => {
+    setImageToPost('');
   };
 
-  const sendPost = async (e: any) => {
+  const uploadPost = async (e: any) => {
     // prevent page refresh on submit
     e.preventDefault();
 
@@ -63,11 +69,11 @@ export default function InputBox() {
         const uploadResult = await uploadString(storageRef, imageToPost as string, 'data_url');
 
         // remove preview of image from InputBox
-        removeImage();
+        resetImageToPost();
 
         const downloadURL = await getDownloadURL(uploadResult.ref);
 
-        // CAUTION: if NOT using 'UPDATEDOC', set {MERGE: TRUE} when updating otherwise it will simply replace current Document and all current data will be lost.
+        // CAUTION: if NOT using 'updateDoc', set {MERGE: TRUE} when updating otherwise it will simply replace current Document and all current data will be lost.
         // 'updateDoc' will MERGE by default!!!
         updateDoc(docRef, {
           postImage: downloadURL,
@@ -95,21 +101,21 @@ export default function InputBox() {
             alt="user profile picture"
           />
         )}
-        <form className="flex flex-1" onSubmit={sendPost}>
+        <form className="flex flex-1" onSubmit={uploadPost}>
           <input
             type="text"
             ref={inputRef}
             placeholder={`What's on your mind, ${session?.user?.name!}?`}
             className="rounded-full h-12 bg-gray-100 flex-grow px-5 focus:outline-none"
           />
-          <button onClick={sendPost} hidden type="submit">
+          <button onClick={uploadPost} hidden type="submit">
             Submit
           </button>
         </form>
 
         {imageToPost && (
           <div
-            onClick={removeImage}
+            onClick={resetImageToPost}
             className="flex flex-col filter hover:brightness-110 transition duration-150 hover:scale-105 cursor-pointer"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
